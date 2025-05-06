@@ -1,0 +1,12 @@
+.column {
+  background-color: #f2f2f3;
+  border-radius: 5px;
+  padding: 15px;
+  width: 80%;
+  height: auto;
+  justify-content: space-between;
+  min-width: 500px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+}
