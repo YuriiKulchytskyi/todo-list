@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Task, Column as ColumnType } from "./types";
 import { Column } from "./Column";
 import { Active, DndContext, DragEndEvent, Over } from "@dnd-kit/core";
+import { AddTaskForm } from "./components/AddTaskForm";
 //
 
 const COLUMNS: ColumnType[] = [
@@ -41,6 +42,14 @@ const INITIAL_TASKS: Task[] = [
 function App() {
   const [tasks, setTasks] = useState<Task[]>(INITIAL_TASKS);
 
+  const handleAddTask = (newTask: Omit<Task, "id">) => {
+    const task: Task = {
+      ...newTask,
+      id: Date.now().toString(),
+    };
+    setTasks((prevTasks) => [...prevTasks, task]);
+  };
+
   function handleDragEnd(event: DragEndEvent) {
     const { active, over }: { active: Active; over: Over | null } = event;
 
@@ -62,8 +71,9 @@ function App() {
   }
 
   return (
-    <main className="p-4 w-full h-full flex justify-center items-center">
-      <div className="flex gap-8 h-full">
+    <main className="p-4 w-full h-full flex flex-col justify-center items-center">
+      <div className="flex gap-8 h-full" >
+        <AddTaskForm onAddTask={handleAddTask} />
         <DndContext onDragEnd={handleDragEnd}>
           {COLUMNS.map((column) => (
             <Column
