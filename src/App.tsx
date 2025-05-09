@@ -1,65 +1,80 @@
-import { closestCorners, DndContext, KeyboardSensor, PointerSensor, TouchSensor, useSensor, useSensors } from "@dnd-kit/core";
-import css from "./App.module.scss";
 import { useState } from "react";
-import { Column } from "./components/Column/Column";
-// import { move } from 'formik'
-import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
-import { Input } from "./components/Input/Input";
-// import { TodoForm } from './components/TodoForm/TodoForm'
-// import { TodoList } from './components/TodoList/TodoList'
+// import css from "./App.module.scss";
+import { Task, Column as ColumnType } from "./types";
+import { Column } from "./Column";
+import { Active, DndContext, DragEndEvent, Over } from "@dnd-kit/core";
 //
 
-export interface Todo {
-  id: string;
-  title: string;
-  completed?: boolean;
-}
+const COLUMNS: ColumnType[] = [
+  { id: "TODO", title: "To Do" },
+  { id: "IN_PROGRESS", title: "In Progress" },
+  { id: "DONE", title: "Done" },
+];
+
+const INITIAL_TASKS: Task[] = [
+  {
+    id: "1",
+    title: "Research Project",
+    description: "Gather requirements and create initial documentation",
+    status: "TODO",
+  },
+  {
+    id: "2",
+    title: "Design System",
+    description: "Create component library and design tokens",
+    status: "TODO",
+  },
+  {
+    id: "3",
+    title: "API Integration",
+    description: "Implement REST API endpoints",
+    status: "IN_PROGRESS",
+  },
+  {
+    id: "4",
+    title: "Testing",
+    description: "Write unit tests for core functionality",
+    status: "DONE",
+  },
+];
 
 function App() {
-  const [tasks, setTasks] = useState<Todo[]>([
-    { id: "1", title: "Task 1" },
-    { id: "2", title: "Task 2" },
-    { id: "3", title: "Task 3" },
-  ]);
+  const [tasks, setTasks] = useState<Task[]>(INITIAL_TASKS);
 
-  const addTasks = (title: string) => {
-    setTasks((tasks) => [...tasks, { id: `${tasks.length + 1}`, title }]);
-  };
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over }: { active: Active; over: Over | null } = event;
 
+    if (!over) return;
 
-  const getTaskPos = (id: string) => {
-    return tasks.findIndex((task) => task.id === id);
-  };
+    const taskId = active.id as string;
+    const newStatus = over.id as Task["status"];
 
-  const handleDragEnd = (event: any) => {
-    const { active, over } = event;
-    if (active.id === over.id) return;
-    setTasks((tasks) => {
-      const originalPos = getTaskPos(active.id);
-      const newPos = getTaskPos(over.id);
-      return arrayMove(tasks, originalPos, newPos);
-    });
-  };
-
-const sensors = useSensors(
-  useSensor(PointerSensor),
-  useSensor(TouchSensor),
-  useSensor(KeyboardSensor, {
-    coordinateGetter: sortableKeyboardCoordinates,
-  })
-)
-
-
-
+    setTasks(() =>
+      tasks.map((task) =>
+        task.id === taskId
+          ? {
+              ...task,
+              status: newStatus,
+            }
+          : task
+      )
+    );
+  }
 
   return (
-    <div className={css.App}>
-      <h1>Todo List</h1>
-      <DndContext onDragEnd={handleDragEnd} sensors={sensors} collisionDetection={closestCorners}>
-        <Column tasks={tasks} />
-      </DndContext>
-      <Input onSubmit={addTasks} />
-    </div>
+    <main className="p-4 w-full h-full flex justify-center items-center">
+      <div className="flex gap-8 h-full">
+        <DndContext onDragEnd={handleDragEnd}>
+          {COLUMNS.map((column) => (
+            <Column
+              key={column.id}
+              column={column}
+              tasks={tasks.filter((task) => task.status === column.id)}
+            />
+          ))}
+        </DndContext>
+      </div>
+    </main>
   );
 }
 
