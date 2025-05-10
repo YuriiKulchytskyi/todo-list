@@ -27,7 +27,7 @@ export const AddTaskForm = ({ onAddTask }: AddTaskFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-transparent p-4 rounded-lg shadow-md mb-4">
+    <form onSubmit={handleSubmit} className="bg-transparent p-4 mb-4">
       <div className="mb-4">
         <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
           Task name

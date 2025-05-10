@@ -1,10 +1,9 @@
-import { useState } from "react";
-// import css from "./App.module.scss";
 import { Task, Column as ColumnType } from "./types";
 import { Column } from "./Column";
 import { Active, DndContext, DragEndEvent, Over } from "@dnd-kit/core";
 import { AddTaskForm } from "./components/AddTaskForm";
-//
+import { useDispatch, useSelector } from "react-redux";
+import { selectTasks, addTask, updateTask } from "./store/features/tasks/taskSlice";
 
 const COLUMNS: ColumnType[] = [
   { id: "TODO", title: "To Do" },
@@ -12,42 +11,16 @@ const COLUMNS: ColumnType[] = [
   { id: "DONE", title: "Done" },
 ];
 
-const INITIAL_TASKS: Task[] = [
-  {
-    id: "1",
-    title: "Research Project",
-    description: "Gather requirements and create initial documentation",
-    status: "TODO",
-  },
-  {
-    id: "2",
-    title: "Design System",
-    description: "Create component library and design tokens",
-    status: "TODO",
-  },
-  {
-    id: "3",
-    title: "API Integration",
-    description: "Implement REST API endpoints",
-    status: "IN_PROGRESS",
-  },
-  {
-    id: "4",
-    title: "Testing",
-    description: "Write unit tests for core functionality",
-    status: "DONE",
-  },
-];
-
 function App() {
-  const [tasks, setTasks] = useState<Task[]>(INITIAL_TASKS);
+  const dispatch = useDispatch();
+  const tasks = useSelector(selectTasks) || [];
 
   const handleAddTask = (newTask: Omit<Task, "id">) => {
     const task: Task = {
       ...newTask,
       id: Date.now().toString(),
     };
-    setTasks((prevTasks) => [...prevTasks, task]);
+    dispatch(addTask(task));
   };
 
   function handleDragEnd(event: DragEndEvent) {
@@ -58,16 +31,7 @@ function App() {
     const taskId = active.id as string;
     const newStatus = over.id as Task["status"];
 
-    setTasks(() =>
-      tasks.map((task) =>
-        task.id === taskId
-          ? {
-              ...task,
-              status: newStatus,
-            }
-          : task
-      )
-    );
+    dispatch(updateTask({ id: taskId, status: newStatus }));
   }
 
   return (

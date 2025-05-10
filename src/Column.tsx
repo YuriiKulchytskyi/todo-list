@@ -7,6 +7,8 @@ interface ColumnProps {
   tasks: Task[];
 }
 
+
+
 export const Column = ({ column, tasks }: ColumnProps) => {
     const {setNodeRef} =useDroppable({
         id: column.id
