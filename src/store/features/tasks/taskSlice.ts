@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createSelector } from "@reduxjs/toolkit";
 import { Task } from "../../../types";
 import { RootState } from "../../store";
 
@@ -23,7 +23,6 @@ const taskSlice = createSlice({
       if (task) {
         Object.assign(task, fields);
       }
-      console.log(action.payload.status);
     },
     toggleTask: (state, action) => {
       const { id } = action.payload;
@@ -32,11 +31,20 @@ const taskSlice = createSlice({
         task.status = task.status === "TODO" ? "DONE" : "TODO";
       }
     },
+    deleteProjectTasks: (state, action) => {
+      const projectId = action.payload;
+      return state.filter(task => task.projectId !== projectId);
+    }
   },
 });
 
-export const { addTask, deleteTask, updateTask, toggleTask } =
-  taskSlice.actions;
+export const { addTask, deleteTask, updateTask, toggleTask, deleteProjectTasks } = taskSlice.actions;
 export const taskReducer = taskSlice.reducer;
 
 export const selectTasks = (state: RootState) => state.tasks;
+
+export const selectTasksByProject = (projectId: string | null) => 
+  createSelector(
+    [selectTasks],
+    (tasks) => tasks.filter(task => task.projectId === projectId)
+  );

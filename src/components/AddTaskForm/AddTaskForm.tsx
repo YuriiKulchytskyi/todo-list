@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Task } from '../types';
+import { Task } from '../../types';
 
 interface AddTaskFormProps {
   onAddTask: (task: Omit<Task, 'id'>) => void;
+  projectId: string | null;
 }
 
-export const AddTaskForm = ({ onAddTask }: AddTaskFormProps) => {
+export const AddTaskForm = ({ onAddTask, projectId }: AddTaskFormProps) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const status = 'TODO' as Task['status']
@@ -18,9 +19,9 @@ export const AddTaskForm = ({ onAddTask }: AddTaskFormProps) => {
     onAddTask({
       title: title.trim(),
       description: description.trim(),
-      status: status as Task['status']
+      status: status as Task['status'],
+      projectId: projectId
     });
-
 
     setTitle('');
     setDescription('');
@@ -29,7 +30,7 @@ export const AddTaskForm = ({ onAddTask }: AddTaskFormProps) => {
   return (
     <form onSubmit={handleSubmit} className="bg-transparent p-4 mb-4">
       <div className="mb-4">
-        <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor="title" className="block text-sm font-medium text-black-700 mb-1">
           Task name
         </label>
         <input
@@ -44,7 +45,7 @@ export const AddTaskForm = ({ onAddTask }: AddTaskFormProps) => {
       </div>
 
       <div className="mb-4">
-        <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor="description" className="block text-sm font-medium text-black-700 mb-1">
           Description
         </label>
         <textarea
@@ -56,7 +57,6 @@ export const AddTaskForm = ({ onAddTask }: AddTaskFormProps) => {
           rows={3}
         />
       </div>
-
 
       <button
         type="submit"

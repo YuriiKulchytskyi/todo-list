@@ -5,9 +5,10 @@ export type Task = {
     status: TaskStatus;
     title: string;
     description: string;
+    projectId: string | null;
 }
 
 export type Column = {
-    id: TaskStatus;
+    id: Task["status"];
     title: string
 }

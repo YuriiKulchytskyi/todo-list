@@ -3,14 +3,17 @@ import { taskReducer } from './features/tasks/taskSlice';
 import { FLUSH, PAUSE, PERSIST, persistReducer, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import persistStore from 'redux-persist/es/persistStore';
+import { projectReducer } from './features/projects/projectSlice';
 
 const persistConfig = {
     key: 'root',
     storage,
+    whitelist: ['projects', 'tasks']
 }
 
 const rootReducer = combineReducers({
   tasks: taskReducer,
+  projects: projectReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

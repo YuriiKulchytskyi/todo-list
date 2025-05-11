@@ -1,7 +1,8 @@
 import { useDraggable } from "@dnd-kit/core";
-import { Task } from "./types";
 import { useDispatch } from "react-redux";
-import { deleteTask } from "./store/features/tasks/taskSlice";
+import { Task } from "../../types";
+import { deleteTask } from "../../store/features/tasks/taskSlice";
+
 
 
 interface TaskCardProps {
