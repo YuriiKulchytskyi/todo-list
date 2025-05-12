@@ -8,10 +8,10 @@ import { PersistGate } from "redux-persist/integration/react";
 import { App } from "./App";
 import { ProjectForm } from "./components/Project/ProjectForm.tsx";
 import { ProjectList } from "./components/Project/ProjectList.tsx";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, RouterProvider } from "react-router-dom";
 import { TaskList } from "./components/Tasks/TaskList.tsx";
 
-const router = createBrowserRouter(
+const router = createHashRouter(
   [
     {
       path: "/",
@@ -34,7 +34,7 @@ const router = createBrowserRouter(
     },
   ],
 
-  { basename: "/todo-list" }
+  // { basename: "/todo-list" }
 );
 
 createRoot(document.getElementById("root")!).render(
