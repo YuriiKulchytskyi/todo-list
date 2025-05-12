@@ -1,6 +1,7 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit";
 import { Task } from "../../../types";
 import { RootState } from "../../store";
+import { selectTasks } from "../tasks/taskSlice";
 
 export type Project = {
   id: string;
@@ -56,4 +57,18 @@ const projectSlice = createSlice({
 export const { addProject, deleteProject, updateProject } = projectSlice.actions;
 export const projectReducer = projectSlice.reducer;
 
-export const selectProjects = (state: RootState) => state.projects.projects || []; 
+export const selectProjects = (state: RootState) => state.projects.projects || [];
+
+export const selectProjectsByTaskCompletion = (completed: boolean) =>
+  createSelector(
+    [selectProjects, selectTasks],
+    (projects, tasks) => {
+      return projects.filter(project => {
+        const projectTasks = tasks.filter(task => task.projectId === project.id);
+        if (projectTasks.length === 0) return false;
+        return completed 
+          ? projectTasks.every(task => task.status === "DONE")
+          : projectTasks.some(task => task.status === "TODO" || task.status === "IN_PROGRESS");
+      });
+    }
+  );

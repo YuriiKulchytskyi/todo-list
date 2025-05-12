@@ -1,4 +1,3 @@
-// import { TaskList } from "./components/Tasks/TaskList";
 import { Link } from "react-router-dom";
 
 
@@ -11,7 +10,7 @@ export function App() {
           <h1 className="text-4xl font-bold text-gray-900 mb-8">
             Welcome to Task Manager
           </h1>
-          <p className="text-xl text-gray-600 mb-12">
+          <p className="text-xl text-white mb-12">
             Organize your projects and tasks efficiently
           </p>
           <div className="space-y-4">

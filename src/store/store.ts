@@ -4,7 +4,7 @@ import { FLUSH, PAUSE, PERSIST, persistReducer, PURGE, REGISTER, REHYDRATE } fro
 import storage from 'redux-persist/lib/storage';
 import persistStore from 'redux-persist/es/persistStore';
 import { projectReducer } from './features/projects/projectSlice';
-
+import { filterReducer } from './features/filter/filterSlice';
 const persistConfig = {
     key: 'root',
     storage,
@@ -13,7 +13,8 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   tasks: taskReducer,
-  projects: projectReducer
+  projects: projectReducer,
+  filter: filterReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -22,7 +22,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
       className="block p-4 bg-neutral-900 rounded-lg shadow-md hover:bg-neutral-800 transition-colors"
     >
       <h3 className="text-lg font-semibold text-neutral-100">
-        {project.title}
+        {project.title} 
       </h3>
       <p className="text-neutral-400 mt-2">{project.description}</p>
       <p className="text-sm text-neutral-500 mt-2">
