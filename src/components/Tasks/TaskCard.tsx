@@ -28,13 +28,13 @@ export const TaskCard = ({ task }: TaskCardProps) => {
         {...attributes}
         {...listeners}
         style={style}
-        className="rounded-lg bg-neutral-900 p-4 shadow-md"
+        className="rounded-lg bg-pink-300 p-4 shadow-md"
       >
-        <h3 className="text-lg font-semibold text-neutral-100">{task.title}</h3>
-        <p className="text-neutral-400">{task.description}</p>
+        <h3 className="text-black font-semibold text-neutral-700">{task.title}</h3>
+        <p className="text-neutral-600">{task.description}</p>
       </div>
       <button
-        className="text-white px-2 py-1 absolute top-2 right-2 cursor-pointer w-10 h-10"
+        className="text-black px-2 py-1 absolute top-2 right-2 cursor-pointer w-10 h-10"
         onClick={() => {
           console.log("Deleting", task.id);
           dispatch(deleteTask(task.id));

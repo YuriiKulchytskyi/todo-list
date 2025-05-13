@@ -6,8 +6,8 @@ import { Provider } from "react-redux";
 import { persistor, store } from "./store/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { App } from "./App";
-import { ProjectForm } from "./components/Project/ProjectForm.tsx";
-import { ProjectList } from "./components/Project/ProjectList.tsx";
+// import { ProjectForm } from "./components/Project/ProjectForm.tsx";
+// import { ProjectList } from "./components/Project/ProjectList.tsx";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import { TaskList } from "./components/Tasks/TaskList.tsx";
 
@@ -21,15 +21,15 @@ const router = createHashRouter(
         </Provider>
       ),
     },
-    { path: "/new", 
-      element: <ProjectForm /> 
-    },
+    // { path: "/new", 
+    //   element: <ProjectForm isOpen={true} onClose={() => {}} /> 
+    // },
+    // {
+    //   path: "/projects/",
+    //   element: <ProjectList />,
+    // },
     {
-      path: "/projects/",
-      element: <ProjectList />,
-    },
-    {
-      path: "/projects/:id",
+      path: "/dreams/:id",
       element: <TaskList />,
     },
   ],

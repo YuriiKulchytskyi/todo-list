@@ -17,14 +17,14 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
   return (
     <div className="relative">
         <Link
-      to={`/projects/${project.id}`}
+      to={`/dreams/${project.id}`}
       key={project.id}
-      className="block p-4 bg-neutral-900 rounded-lg shadow-md hover:bg-neutral-800 transition-colors"
+      className="block p-4 bg-pink-300 rounded-lg shadow-md hover:bg-pink-500 transition-colors"
     >
-      <h3 className="text-lg font-semibold text-neutral-100">
+      <h3 className="text-lg font-semibold text-neutral-700">
         {project.title} 
       </h3>
-      <p className="text-neutral-400 mt-2">{project.description}</p>
+      <p className="text-neutral-600 mt-2">{project.description}</p>
       <p className="text-sm text-neutral-500 mt-2">
         Created: {new Date(project.createdAt).toLocaleDateString()}
         </p>
