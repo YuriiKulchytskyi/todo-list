@@ -1,13 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
-import { addTask, selectTasksByProject, updateTask } from "../../store/features/tasks/taskSlice";
+import {
+  addTask,
+  selectTasksByProject,
+  updateTask,
+} from "../../store/features/tasks/taskSlice";
 import { Task, Column as ColumnType } from "../../types";
 import { Active, DndContext, DragEndEvent, Over } from "@dnd-kit/core";
 import { AddTaskForm } from "../AddTaskForm/AddTaskForm";
 import { Column } from "./Column";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
-
-
 
 const COLUMNS: ColumnType[] = [
   { id: "TODO", title: "To Do" },
@@ -41,16 +43,21 @@ export const TaskList = () => {
   }
 
   return (
-    <div className="relative">
-      <div 
-        className="absolute top-0 left-0 w-10 h-10 text-black rounded-full flex items-center justify-center cursor-pointer" 
+    <div className="relative ">
+      <button
+        className="absolute top-0 left-0 w-10 h-10 text-black rounded-full flex items-center justify-center cursor-pointer"
         onClick={() => navigate("/")}
       >
         <ArrowLeftIcon className="w-6 h-6" />
-      </div>
-      <div className="p-4 w-full h-full flex flex-col justify-center items-center">
-        <div className="flex gap-8 h-full">
-          <AddTaskForm onAddTask={handleAddTask} projectId={projectId || null} />
+      </button>
+      <div className="p-4 w-full h-full flex flex-col justify-center items-center ">
+        <div className="flex gap-8 h-full md:flex-row flex-col sm:flex-row">
+          <div className="hidden md:block xl:block">
+            <AddTaskForm
+              onAddTask={handleAddTask}
+              projectId={projectId || null}
+            />
+          </div>
           <DndContext onDragEnd={handleDragEnd}>
             {COLUMNS.map((column) => (
               <Column

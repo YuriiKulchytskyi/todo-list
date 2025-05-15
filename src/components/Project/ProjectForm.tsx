@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addProject } from "../../store/features/projects/projectSlice";
-// import { useNavigate } from "react-router-dom";
+import css from "./Project.module.scss";
 
 interface ProjectFormModalProps {
   isOpen: boolean;
@@ -36,18 +36,15 @@ export const ProjectForm = ({ isOpen, onClose }: ProjectFormModalProps) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 w-full max-w-lg relative">
-        <button
-          onClick={onClose}
-          className="absolute top-2 right-2 text-gray-500 hover:text-black text-2xl"
-        >
+    <div className={css.overlay}>
+      <div className={css.modal}>
+        <button onClick={onClose} className={css.closeButton}>
           X
         </button>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <form onSubmit={handleSubmit} className={css.form}>
           <input
-            className="p-2 rounded-md border-2 border-neutral-700"
+            className={css.input}
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -55,15 +52,12 @@ export const ProjectForm = ({ isOpen, onClose }: ProjectFormModalProps) => {
             required
           />
           <textarea
-            className="p-2 rounded-md border-2 border-neutral-700"
+            className={css.textarea}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Project description"
           />
-          <button
-            type="submit"
-            className="p-2 rounded-md bg-blue-500 text-white"
-          >
+          <button type="submit" className={css.submitButton}>
             Add Project
           </button>
         </form>

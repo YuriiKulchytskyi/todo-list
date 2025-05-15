@@ -181,3 +181,40 @@ width: 100%;
     opacity: 0;
   }
 }
+
+@media (max-width: 768px) {
+  .bookWrapper {
+    width: 320px;
+    height: 450px;
+    margin: 100px auto;
+  }
+
+  .quote {
+    font-size: 1.1rem;
+    padding: 1rem;
+  }
+
+  .frontBack img.logo {
+    width: 180px;
+  }
+
+  .text {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bookWrapper {
+    width: 260px;
+    height: 380px;
+    margin: 80px auto;
+  }
+
+  .quote {
+    font-size: 1rem;
+  }
+
+  .frontBack img.logo {
+    width: 140px;
+  }
+}
